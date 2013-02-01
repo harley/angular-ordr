@@ -28,6 +28,7 @@ App.TablesRoute = Ember.Route.extend({
 App.TableController = Ember.ArrayController.extend();
 App.TableController = Ember.ObjectController.extend();
 App.FoodController = Ember.ArrayController.extend();
+App.TabController = Ember.ObjectController.extend();
 
 // Models
 App.Store = DS.Store.extend({
@@ -40,7 +41,12 @@ App.Table = DS.Model.extend({
 });
 
 App.Tab = DS.Model.extend({
-  tabItems: DS.hasMany('App.TabItem')
+  tabItems: DS.hasMany('App.TabItem'),
+  cents: function(){
+    return this.get('tabItems').getEach('cents').reduce(function(acc, item){
+      return acc + item;
+    }, 0);
+  }.property('tabItems.@each.cents')
 });
 
 App.TabItem = DS.Model.extend({

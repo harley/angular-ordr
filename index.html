@@ -48,7 +48,8 @@
           {{ render "food" }}
         </div>
         <div class="nine columns">
-          Table {{id}}
+          <h2>Table <span>{{id}}</span></h2>
+          {{ render "tab" tab }}
         </div>
       </div>
     </script>
@@ -71,6 +72,22 @@
         </p>
         </li>
         {{/each}}
+      </ul>
+    </script>
+    <script type="text/x-handlebars" data-template-name="tab">
+      <ul id="customer-tab">
+        {{#each tabItem in tabItems }}
+        <li>
+          <h3>
+            {{ tabItem.food.name}} <span>{{tabItem.cents}}</span>
+          </h3>
+        </li>
+        {{ else }}
+        <li><h3>Click a food to add it</h3></li>
+        {{/each}}
+        <li id='total'>
+        <h3>Total <span>${{ cents }}</span></h3>
+        </li>
       </ul>
     </script>
 
