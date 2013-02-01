@@ -27,8 +27,25 @@ App.TablesRoute = Ember.Route.extend({
 
 App.TableController = Ember.ArrayController.extend();
 App.TableController = Ember.ObjectController.extend();
-App.FoodController = Ember.ArrayController.extend();
+App.FoodController = Ember.ArrayController.extend({
+  addFood: function(food) {
+    var table = this.controllerFor('table').get('model'),
+        tabItems = table.get('tab.tabItems');
+    tabItems.createRecord({
+      food: food,
+      cents: food.get('cents')
+    });
+  }
+});
 App.TabController = Ember.ObjectController.extend();
+
+// View heleprs
+Ember.Handlebars.registerBoundHelper('money', function(value){
+  if (isNaN(value)) { return "0.00"; }
+  return (value % 100 === 0 ?
+          (value / 100 + ".00") : 
+          (parseInt(value/100, 10) + '.' + value % 100));
+});
 
 // Models
 App.Store = DS.Store.extend({
