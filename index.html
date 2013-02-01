@@ -28,6 +28,9 @@
         </div>
       </div>
     </script>
+    <script type="text/x-handlebars" data-template-name="tables/index">
+      <h2>Please select a table</h2>
+  </script>
     <script type="text/x-handlebars" data-template-name="tables">
       <div class="row">
         <div class="four columns" id="tables">
@@ -39,7 +42,15 @@
       </div>
     </script>
     <script type="text/x-handlebars" data-template-name="table">
-      hello
+      <div class="row">
+        <div class="three columns">
+          Food
+          {{ render "food" }}
+        </div>
+        <div class="nine columns">
+          Table {{id}}
+        </div>
+      </div>
     </script>
     <script type="text/x-handlebars" data-template-name="_tableMenu">
       <h2>Tables</h2>
@@ -49,7 +60,18 @@
           {{ table.id }}
         {{/linkTo}}
       {{/each}}
-
+    </script>
+    <script type="text/x-handlebars" data-template-name="food">
+      <ul id="menu">
+        {{#each food in controller}}
+        <li>
+        <img {{ bindAttr src="food.imageUrl"}} />
+        <p>
+        {{ food.name }}
+        </p>
+        </li>
+        {{/each}}
+      </ul>
     </script>
 
     <script src="js/libs/jquery-1.8.3.min.js"></script>
