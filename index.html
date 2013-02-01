@@ -29,17 +29,25 @@
       </div>
     </script>
     <script type="text/x-handlebars" data-template-name="tables">
-      {{ partial "tableMenu" }}
+      <div class="row">
+        <div class="four columns" id="tables">
+          {{ partial "tableMenu" }}
+        </div>
+        <div class="eight columns" id="order">
+          {{ outlet }}
+        </div>
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="table">
+      hello
     </script>
     <script type="text/x-handlebars" data-template-name="_tableMenu">
       <h2>Tables</h2>
 
       {{#each table in controller}}
-      <div class="row">
-        <div class="four columns" id="tables">
+        {{#linkTo "table" table class="panel six columns"}}
           {{ table.id }}
-        </div>
-      </div>
+        {{/linkTo}}
       {{/each}}
 
     </script>
