@@ -16,7 +16,33 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
-    Hello Ember
+
+    <script type="text/x-handlebars" data-template-name="application">
+      <div class="row">
+        <div class="twelve columns">
+          <h1>Ordr</h1>
+          <hr />
+          <p>
+          {{ outlet }}
+          </p>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="tables">
+      {{ partial "tableMenu" }}
+    </script>
+    <script type="text/x-handlebars" data-template-name="_tableMenu">
+      <h2>Tables</h2>
+
+      {{#each table in controller}}
+      <div class="row">
+        <div class="four columns" id="tables">
+          {{ table.id }}
+        </div>
+      </div>
+      {{/each}}
+
+    </script>
 
     <script src="js/libs/jquery-1.8.3.min.js"></script>
     <script src="js/libs/handlebars-1.0.0.rc.2.js"></script>
