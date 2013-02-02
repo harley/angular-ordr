@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="three columns">
+  	<ul id="menu">
+  		<li ng-repeat="food in foods">
+				<img ng-src="{{food.imageUrl}}" ng-click="addFood(food)" style="cursor:pointer"/>
+				<p>
+					{{ food.name }}
+				</p>
+  		</li>
+  	</ul> 
+  </div>
+  <div class="nine columns" ng-controller="TabCtrl">
+    <h2>Table <span>{{id}}</span></h2>
+      <ul id="customer-tab">
+        <li ng-show="tab.tabItems.length == 0"><h3>Click a food to add it</h3></li>
+        <li ng-repeat="tabItem in tab.tabItems">
+          <h3>
+            {{ tabItem.food.name}} <span>{{ tabItem.cents | money }}</span>
+          </h3>
+        </li>
+        <li id='total' ng-show="tab.tabItems.length > 0">
+          <h3>Total <span>{{ totalCents(tab.tabItems) | money }}</span></h3>
+        </li>
+      </ul>
+  </div>
+</div>
