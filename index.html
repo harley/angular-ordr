@@ -2,7 +2,7 @@
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" ng-app='ordr'> <!--<![endif]-->
   <head>
     <meta charset="utf-8" />
 
@@ -16,86 +16,25 @@
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
-
-    <script type="text/x-handlebars" data-template-name="application">
-      <div class="row">
-        <div class="twelve columns">
-          <h1>Ordr</h1>
-          <hr />
-          <p>
-          {{ outlet }}
-          </p>
+    <div class="row">
+      <div class="twelve columns">
+        <h2> <a href="/">Ordr</a> </h2>
+        <hr>
+        <div class="row">
+          <div class="four columns" id="tables" ng-controller="TablesCtrl">
+            <h2>
+              Tables
+            </h2>
+            <a href="#tables/{{table.id}}" class="panel six columns" ng-repeat="table in tables">{{table.id}}</a>
+          </div>
+          <div class="eight columns" id="order">
+            <div ng-view></div> 
+          </div>
         </div>
       </div>
-    </script>
-    <script type="text/x-handlebars" data-template-name="tables/index">
-      <h2>Please select a table</h2>
-  </script>
-    <script type="text/x-handlebars" data-template-name="tables">
-      <div class="row">
-        <div class="four columns" id="tables">
-          {{ partial "tableMenu" }}
-        </div>
-        <div class="eight columns" id="order">
-          {{ outlet }}
-        </div>
-      </div>
-    </script>
-    <script type="text/x-handlebars" data-template-name="table">
-      <div class="row">
-        <div class="three columns">
-          {{ render "food" }}
-        </div>
-        <div class="nine columns">
-          <h2>Table <span>{{id}}</span></h2>
-          {{ render "tab" tab }}
-        </div>
-      </div>
-    </script>
-    <script type="text/x-handlebars" data-template-name="_tableMenu">
-      <h2>Tables</h2>
-
-      {{#each table in controller}}
-        {{#linkTo "table" table class="panel six columns"}}
-          {{ table.id }}
-        {{/linkTo}}
-      {{/each}}
-    </script>
-    <script type="text/x-handlebars" data-template-name="food">
-      <ul id="menu">
-        {{#each food in controller}}
-        <li>
-        <a href="#" {{ action "addFood" food }}>
-          <img {{ bindAttr src="food.imageUrl"}} />
-          <p>
-          {{ food.name }}
-          </p>
-        </a>
-        </li>
-        {{/each}}
-      </ul>
-    </script>
-    <script type="text/x-handlebars" data-template-name="tab">
-      <ul id="customer-tab">
-        {{#each tabItem in tabItems }}
-        <li>
-          <h3>
-            {{ tabItem.food.name}} <span>${{ money tabItem.cents}}</span>
-          </h3>
-        </li>
-        {{ else }}
-        <li><h3>Click a food to add it</h3></li>
-        {{/each}}
-        <li id='total'>
-          <h3>Total <span>${{ money cents }}</span></h3>
-        </li>
-      </ul>
-    </script>
-
-    <script src="js/libs/jquery-1.8.3.min.js"></script>
-    <script src="js/libs/handlebars-1.0.0.rc.2.js"></script>
-    <script src="js/libs/ember.js"></script>
-    <script src="js/libs/ember-data.js"></script>
+    </div>
+    <script src="js/libs/angular.js"></script>
+    <script src="js/libs/underscore.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
