@@ -17,7 +17,7 @@
         <li ng-show="tab.tabItems.length == 0"><h3>Click a food to add it</h3></li>
         <li ng-repeat="tabItem in tab.tabItems">
           <h3>
-            {{ tabItem.food.name}} <span>{{ tabItem.cents | money }}</span>
+            {{ tabItem.name}} <span>{{ tabItem.cents | money }}</span>
           </h3>
         </li>
         <li id='total' ng-show="tab.tabItems.length > 0">

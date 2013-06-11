@@ -33,29 +33,11 @@ app.controller("TableCtrl",  function ($scope, $routeParams, OrderService) {
   $scope.table = _.find(OrderService.Table, function(e) { return String(e.id) === $scope.id; });
 
   // load tab
-  $scope.tab = _.find(OrderService.Tab, function(e) { return e.id === $scope.table.tab });
-
-  // load tab items
-  // this is a very stupid way to map record ids to records. but works for now
-  $scope.tab.tabItems = _.map($scope.tab.tabItems, function(tabItemId){
-    var tabItem = _.find(OrderService.TabItem, function(e){
-      return tabItemId === e.id || tabItemId === e;
-    });
-    if (tabItem) {
-      tabItem.food = _.find(OrderService.Food, function(e){
-        return tabItem.food === e.id || tabItem.food === e; 
-      });
-    }
-    return tabItem;
-  })
+  $scope.tab = $scope.table.tab;
 
   // add tab item
   $scope.addFood = function(food) {
-    $scope.tab.tabItems.push(
-    {
-      food: food,
-      cents: food.cents
-    });
+    $scope.tab.tabItems.push(food);
   }
 })
 
@@ -77,74 +59,26 @@ app.controller("TabCtrl", function($scope) {
 
 app.factory("OrderService", function(){
   var Fixtures = {};
+  
+  var tableFactory = function(id){
+    return {
+      'id': id,
+      'tab': {
+        'tabItems': []
+      } 
+    }
+  }
+
   Fixtures.Table = [
-    {
-      id: 1,
-      tab: 1
-    }, {
-      id: 2,
-      tab: 2
-    }, {
-      id: 3,
-      tab: 3
-    }, {
-      id: 4,
-      tab: 4
-    }, {
-      id: 5,
-      tab: 5
-    }, {
-      id: 6,
-      tab: 6
-  }];
-
-  Fixtures.Tab = [
-    {
-      id: 1,
-      tabItems: []
-    }, {
-      id: 2,
-      tabItems: []
-    }, {
-      id: 3,
-      tabItems: []
-    }, {
-      id: 4,
-      tabItems: [400, 401, 402, 403, 404]
-    }, {
-      id: 5,
-      tabItems: []
-    }, {
-      id: 6,
-      tabItems: []
-    }
+    tableFactory(1),
+    tableFactory(2),
+    tableFactory(3),
+    tableFactory(4),
+    tableFactory(5),
+    tableFactory(6),
   ];
 
-  Fixtures.TabItem = [
-    {
-      id: 400,
-      cents: 1500,
-      food: 1
-    }, {
-      id: 401,
-      cents: 300,
-      food: 2
-    }, {
-      id: 402,
-      cents: 700,
-      food: 3
-    }, {
-      id: 403,
-      cents: 950,
-      food: 4
-    }, {
-      id: 404,
-      cents: 2000,
-      food: 5
-    }
-  ];
-
-  Fixtures.Food = [
+  var Food = [
     {
       id: 1,
       name: 'Pizza',
@@ -172,6 +106,10 @@ app.factory("OrderService", function(){
       cents: 2000
     }
   ];
+
+  Fixtures.Table[3].tab.tabItems = [Food[0],Food[1],Food[2],Food[3],Food[4]];
+
+  Fixtures.Food = Food;
 
   return Fixtures;
 });
