@@ -56,6 +56,33 @@ Run:
 Then visit http://localhost:3000
 There's also a live demo hosted [here](https://dl.dropbox.com/u/229718/angular-ordr/index.html)
 
+## (Bonus) REST backend
+
+@xinsight implemented a RESTful backend over at https://github.com/xinsight/angular-ordr/tree/rest-backend if you are interested. Notes below are from his branch:
+
+The original angular-ordr had a lot of code to manage the client-side-only data structure. I was curious how the angular code would look with a proper backend, so I created one using Restify and node.js.
+
+To start the REST server:
+
+    npm install -g restify
+    node server/server.js
+
+Supported REST URLs:
+
+    # view tables
+    curl -i http://localhost:3001/tables
+    # view details for a table (tab items)
+    curl -i http://localhost:3001/tables/1
+    # view foods
+    curl -i http://localhost:3001/foods
+    # add food item 3 to table 1  (POST)
+    curl -d "" -i http://localhost:3001/tables/1/foods/3
+    # remove food item from table
+    curl -X DELETE -i http://localhost:3001/tables/1/tabitem/100
+
+Access to the REST server is contained in a service, which is used by the various controllers. The only part that seemed crufty was having to use the $rootScope to store the table details, so that they could be accessed by two controllers. (One controller adds elements to the tab, and another removes elements. When they used $scope, they interface would occasionally ignore adds and deletes.)
+
+Two important omissions in this demo: unit testing and robust handling of network errors.
 
 ## License:
 
